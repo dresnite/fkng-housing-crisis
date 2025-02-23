@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import useSound from 'use-sound';
 
 interface Option {
     text: string;
@@ -31,6 +32,9 @@ export default function QuestionScreen({
     isAnswerLocked,
     onAnswerClick
 }: QuestionScreenProps) {
+    const [playCorrect] = useSound('/sounds/correct.mp3');
+    const [playWrong] = useSound('/sounds/wrong.mp3');
+
     const getButtonClasses = (index: number, isCorrect: boolean) => {
         let baseClasses = "w-full text-left p-4 rounded-lg border border-black transition-colors border-2 ";
         
@@ -39,6 +43,15 @@ export default function QuestionScreen({
         }
         
         return baseClasses + "border-gray-200 hover:bg-blue-50";
+    };
+
+    const handleAnswerClick = (isCorrect: boolean, index: number) => {
+        if (isCorrect) {
+            playCorrect();
+        } else {
+            playWrong();
+        }
+        onAnswerClick(isCorrect, index);
     };
 
     return (
@@ -65,7 +78,7 @@ export default function QuestionScreen({
                 {question.options.map((option, index) => (
                     <motion.button
                         key={index}
-                        onClick={() => onAnswerClick(option.isCorrect, index)}
+                        onClick={() => handleAnswerClick(option.isCorrect, index)}
                         className={getButtonClasses(index, option.isCorrect)}
                         disabled={isAnswerLocked && wrongAnswer !== index}
                         initial={{ opacity: 0, y: 20 }}
