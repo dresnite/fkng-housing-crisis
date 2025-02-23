@@ -15,15 +15,15 @@ export default function VantaBackground() {
                     el: vantaRef.current,
                     THREE: THREE,
                     mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200.00,
-  minWidth: 200.00,
-  scale: 1.00,
-  scaleMobile: 1.00,
-  backgroundColor: 0x372a61,
-  color: 0xfa397b,
-  color2: 0xfa397b
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    backgroundColor: 0x372a61,
+                    color: 0xfa397b,
+                    color2: 0xfa397b
                 })
             );
         }
