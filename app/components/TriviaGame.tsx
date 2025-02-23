@@ -42,7 +42,7 @@ export default function TriviaGame() {
 
     return (
         <>
-            <div className="min-h-screen text-black flex flex-col gap-6 justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+            <div className="min-h-screen text-black flex flex-col gap-4 justify-center items-center pt-8 pb-16 px-4 sm:px-6 lg:px-8">
                 <AnimatedTitle />
                 <motion.div 
                     className="max-w-3xl w-full mx-auto"
