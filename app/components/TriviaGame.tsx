@@ -56,7 +56,7 @@ const questions: Question[] = [
             { 
                 text: "Chaos", 
                 isCorrect: false,
-                errorMessage: "Do I look chaotic to you? 🤨" 
+                errorMessage: "You might have a point there 🤨" 
             },
             { 
                 text: "Dirty dishes", 
@@ -119,7 +119,7 @@ export default function TriviaGame() {
     };
 
     const getButtonClasses = (index: number, isCorrect: boolean) => {
-        let baseClasses = "w-full text-left p-4 rounded-lg border transition-colors ";
+        let baseClasses = "w-full text-left p-4 rounded-lg border border-black transition-colors border-2 ";
         
         if (wrongAnswer === index) {
             return baseClasses + "bg-red-100 border-red-500 text-red-700";
@@ -138,7 +138,7 @@ export default function TriviaGame() {
                 <h1 className="text-2xl md:text-3xl font-bold text-center max-w-2xl text-white drop-shadow-lg">
                     Choose the correct answers to unlock my secret
                 </h1>
-                <div className="max-w-3xl w-full mx-auto backdrop-blur-sm">
+                <div className="max-w-3xl w-full mx-auto backdrop-blur-sm bg-pink-400">
                     <div className="bg-white/80 rounded-lg shadow-xl p-8">
                         {showScore ? (
                             <div className="text-center">
