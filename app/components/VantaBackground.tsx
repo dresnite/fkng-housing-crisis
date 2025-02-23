@@ -23,7 +23,7 @@ export default function VantaBackground() {
   scaleMobile: 1.00,
   backgroundColor: 0x372a61,
   color: 0xfa397b,
-  color2: 0xf5eeee
+  color2: 0xfa397b
                 })
             );
         }

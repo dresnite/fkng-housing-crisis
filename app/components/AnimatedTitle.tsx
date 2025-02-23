@@ -37,22 +37,39 @@ export default function AnimatedTitle() {
         },
     };
 
+    const floatingAnimation = {
+        y: [-10, 10],
+        transition: {
+            y: {
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+            }
+        }
+    };
+
     return (
-        <motion.h1
-            className="text-2xl md:text-3xl font-bold text-center max-w-2xl text-white drop-shadow-lg"
-            variants={container}
-            initial="hidden"
-            animate="visible"
+        <motion.div
+            animate={floatingAnimation}
+            className="w-full flex justify-center"
         >
-            {words.map((word, index) => (
-                <motion.span
-                    variants={child}
-                    key={index}
-                    className="inline-block mr-2"
-                >
-                    {word}
-                </motion.span>
-            ))}
-        </motion.h1>
+            <motion.h1
+                className="text-2xl md:text-3xl font-bold text-center max-w-2xl text-white  drop-shadow-lg"
+                variants={container}
+                initial="hidden"
+                animate="visible"
+            >
+                {words.map((word, index) => (
+                    <motion.span
+                        variants={child}
+                        key={index}
+                        className="inline-block mr-2"
+                    >
+                        {word}
+                    </motion.span>
+                ))}
+            </motion.h1>
+        </motion.div>
     );
 } 
