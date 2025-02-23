@@ -15,7 +15,7 @@ export default function FloatingBike() {
   const [position, setPosition] = useState(() => ({ x: 0, y: 0 }));
   const [direction, setDirection] = useState(() => 1); // 1 for right, -1 for left
   const [dimensions, setDimensions] = useState(() => getWindowDimensions());
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Update dimensions on window resize
