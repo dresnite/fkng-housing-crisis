@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 
 export default function AnimatedTitle() {
-    const text = "Choose the correct answers to unlock my secret";
+    const text = "Choose the correct answers to unlock my secret message";
     const words = text.split(" ");
 
     const container = {
