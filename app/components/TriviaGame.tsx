@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import VantaBackground from './VantaBackground';
+import AnimatedTitle from './AnimatedTitle';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Question {
     id: number;
@@ -135,85 +137,142 @@ export default function TriviaGame() {
     return (
         <>
             <div className="min-h-screen text-black flex flex-col gap-6 justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
-                <h1 className="text-2xl md:text-3xl font-bold text-center max-w-2xl text-white drop-shadow-lg">
-                    Choose the correct answers to unlock my secret
-                </h1>
-                <div className="max-w-3xl w-full mx-auto backdrop-blur-sm bg-pink-400">
-                    <div className="bg-white/80 rounded-lg shadow-xl p-8">
-                        {showScore ? (
-                            <div className="text-center">
-                                <h2 className="text-2xl font-bold mb-4">
-                                    You scored {score} out of {questions.length}
-                                </h2>
-                                {score === questions.length ? (
-                                    <div className="mt-6">
-                                        <h3 className="text-xl font-semibold mb-4 text-green-600">
-                                            Congratulations! Here's my message:
-                                        </h3>
-                                        <p className="text-gray-700 whitespace-pre-line">
-                                            {finalMessage}
-                                        </p>
-                                    </div>
+                <AnimatedTitle />
+                <motion.div 
+                    className="max-w-3xl w-full mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                        type: "spring",
+                        damping: 20,
+                        stiffness: 100,
+                        delay: 1.2
+                    }}
+                >
+                    <div className="backdrop-blur-sm bg-pink-400 rounded-lg p-1">
+                        <motion.div 
+                            className="bg-white/80 rounded-lg shadow-xl p-8"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                                type: "spring",
+                                damping: 20,
+                                stiffness: 100,
+                                delay: 1.4
+                            }}
+                        >
+                            <AnimatePresence mode="wait">
+                                {showScore ? (
+                                    <motion.div 
+                                        key="score"
+                                        className="text-center"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{
+                                            type: "spring",
+                                            damping: 20,
+                                            stiffness: 100
+                                        }}
+                                    >
+                                        <h2 className="text-2xl font-bold mb-4">
+                                            You scored {score} out of {questions.length}
+                                        </h2>
+                                        {score === questions.length ? (
+                                            <motion.div 
+                                                className="mt-6"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.3 }}
+                                            >
+                                                <h3 className="text-xl font-semibold mb-4 text-green-600">
+                                                    Congratulations! Here's my message:
+                                                </h3>
+                                                <p className="text-gray-700 whitespace-pre-line">
+                                                    {finalMessage}
+                                                </p>
+                                            </motion.div>
+                                        ) : (
+                                            <p className="text-red-600 mb-4">
+                                                Try again to unlock the special message!
+                                            </p>
+                                        )}
+                                        <div className="flex gap-4 justify-center">
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => window.open('https://www.instagram.com/andreskomet/', '_blank')}
+                                                className="mt-6 bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors"
+                                            >
+                                                Instagram
+                                            </motion.button>
+                                            <motion.button
+                                                whileHover={{ scale: 1.05 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                onClick={() => window.open('https://wa.me/34691576986', '_blank')}
+                                                className="mt-6 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors"
+                                            >
+                                                Whatsapp
+                                            </motion.button>
+                                        </div>
+                                    </motion.div>
                                 ) : (
-                                    <p className="text-red-600 mb-4">
-                                        Try again to unlock the special message!
-                                    </p>
+                                    <motion.div
+                                        key="question"
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -50 }}
+                                        transition={{
+                                            type: "spring",
+                                            damping: 20,
+                                            stiffness: 100
+                                        }}
+                                    >
+                                        <div className="mb-8">
+                                            <h2 className="text-xl font-bold mb-2">
+                                                Question {currentQuestion + 1} of {questions.length}
+                                            </h2>
+                                            <p className="text-lg text-gray-700">
+                                                {questions[currentQuestion].text}
+                                            </p>
+                                        </div>
+                                        <div className="space-y-4">
+                                            {questions[currentQuestion].options.map((option, index) => (
+                                                <motion.button
+                                                    key={index}
+                                                    onClick={() => handleAnswerClick(option.isCorrect, index)}
+                                                    className={getButtonClasses(index, option.isCorrect)}
+                                                    disabled={isAnswerLocked && wrongAnswer !== index}
+                                                    initial={{ opacity: 0, y: 20 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{
+                                                        type: "spring",
+                                                        damping: 20,
+                                                        stiffness: 100,
+                                                        delay: index * 0.1
+                                                    }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    {option.text}
+                                                    {wrongAnswer === index && (
+                                                        <motion.span 
+                                                            className="ml-2 text-red-600"
+                                                            initial={{ opacity: 0, x: -10 }}
+                                                            animate={{ opacity: 1, x: 0 }}
+                                                        >
+                                                            {option.errorMessage || "✗ Wrong... 😡"}
+                                                        </motion.span>
+                                                    )}
+                                                </motion.button>
+                                            ))}
+                                        </div>
+                                    </motion.div>
                                 )}
-
-                                <div className="flex gap-4 justify-center">
-                                    <button
-                                        onClick={() => window.open('https://www.instagram.com/andreskomet/', '_blank')}
-                                        className="mt-6 bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors"
-                                    >
-                                        Instagram
-                                    </button>
-                                    
-                                    <button
-                                        onClick={() => window.open('https://wa.me/34691576986', '_blank')}
-                                        className="mt-6 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors"
-                                    >
-                                        Whatsapp
-                                    </button>
-
-                                    {false && <button
-                                        onClick={resetQuiz}
-                                        className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors"
-                                    >
-                                        Play again
-                                    </button>}
-                                </div>
-                            </div>
-                        ) : (
-                            <div>
-                                <div className="mb-8">
-                                    <h2 className="text-xl font-bold mb-2">
-                                        Question {currentQuestion + 1} of {questions.length}
-                                    </h2>
-                                    <p className="text-lg text-gray-700">
-                                        {questions[currentQuestion].text}
-                                    </p>
-                                </div>
-                                <div className="space-y-4">
-                                    {questions[currentQuestion].options.map((option, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => handleAnswerClick(option.isCorrect, index)}
-                                            className={getButtonClasses(index, option.isCorrect)}
-                                            disabled={isAnswerLocked && wrongAnswer !== index}
-                                        >
-                                            {option.text}
-                                            {wrongAnswer === index && (
-                                                <span className="ml-2 text-red-600">
-                                                    {option.errorMessage || "✗ Wrong... 😡"}
-                                                </span>
-                                            )}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                            </AnimatePresence>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </div>
             <VantaBackground />
         </>
