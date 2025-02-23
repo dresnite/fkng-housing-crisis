@@ -88,6 +88,7 @@ export default function TriviaGame() {
     const [showScore, setShowScore] = useState(false);
     const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
     const [isAnswerLocked, setIsAnswerLocked] = useState(false);
+    const [isGameLocked, setIsGameLocked] = useState(true);
 
     const handleAnswerClick = (isCorrect: boolean, index: number) => {
         if (isAnswerLocked) return;
@@ -162,7 +163,46 @@ export default function TriviaGame() {
                             }}
                         >
                             <AnimatePresence mode="wait">
-                                {showScore ? (
+                                {isGameLocked ? (
+                                    <motion.div
+                                        key="lock"
+                                        className="text-center py-8 cursor-pointer"
+                                        onClick={() => setIsGameLocked(false)}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                    >
+                                        <motion.div
+                                            className="text-6xl mb-4"
+                                            animate={{
+                                                scale: [1, 1.1, 1],
+                                                rotate: [0, -5, 5, 0]
+                                            }}
+                                            transition={{
+                                                duration: 2,
+                                                repeat: Infinity,
+                                                repeatType: "reverse"
+                                            }}
+                                        >
+                                            🔒
+                                        </motion.div>
+                                        <motion.p
+                                            className="text-xl font-semibold text-gray-700"
+                                            animate={{
+                                                opacity: [1, 0.7, 1]
+                                            }}
+                                            transition={{
+                                                duration: 1.5,
+                                                repeat: Infinity,
+                                                repeatType: "reverse"
+                                            }}
+                                        >
+                                            Click to start
+                                        </motion.p>
+                                    </motion.div>
+                                ) : showScore ? (
                                     <motion.div 
                                         key="score"
                                         className="text-center"
