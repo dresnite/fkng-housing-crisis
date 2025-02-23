@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import AuthorBadge from "./components/AuthorBadge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,9 +57,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 text-white text-sm bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full hover:cursor-pointer text-center w-[280px]" onClick={() => window.open("https://x.com/dresnite/", "_blank")}>
-          Made with ❤️ by dresnite+cursor
-        </div>
+        <AuthorBadge />
         {children}
       </body>
     </html>
