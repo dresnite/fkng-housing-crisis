@@ -1,17 +1,25 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import useSound from 'use-sound';
 
 interface LockScreenProps {
     onUnlock: () => void;
 }
 
 export default function LockScreen({ onUnlock }: LockScreenProps) {
+    const [playCorrect] = useSound('/sounds/correct.mp3');
+
+    const handleUnlock = () => {
+        playCorrect();
+        onUnlock();
+    }
+    
     return (
         <motion.div
             key="lock"
             className="text-center py-8 cursor-pointer"
-            onClick={onUnlock}
+            onClick={handleUnlock}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
