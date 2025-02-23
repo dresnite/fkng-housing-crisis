@@ -191,6 +191,24 @@ export default function TriviaGame() {
                                                 <p className="text-gray-700 whitespace-pre-line">
                                                     {finalMessage}
                                                 </p>
+                                                <motion.p 
+                                                    className="mt-4 text-gray-600"
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    transition={{ delay: 0.6 }}
+                                                >
+                                                    If you want to know more,{' '}
+                                                    <motion.a
+                                                        href="https://dresnite.com"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-pink-500 hover:text-pink-600 underline"
+                                                        whileHover={{ scale: 1.05 }}
+                                                        whileTap={{ scale: 0.95 }}
+                                                    >
+                                                        go to my website
+                                                    </motion.a>
+                                                </motion.p>
                                             </motion.div>
                                         ) : (
                                             <p className="text-red-600 mb-4">
